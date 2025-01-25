@@ -1,7 +1,11 @@
-// Esta es la clase Base Figura
+
 export class Figura{
     constructor(nombre){
-        this.nombre = nombre
+
+        if(new.target === Figura){
+            throw new Error("No se puede instanciar la clase abstracta Figura")
+        }
+        this.nombre = nombre;
     }
     perimetro(){
         return 0
@@ -11,80 +15,134 @@ export class Figura{
     }
 }
 
-// Esta es la clase Derivada Triangulo
 export class Triangulo extends Figura {
     constructor(base, altura, nombre){
         super(nombre)
         this.base = base
         this.altura = altura
     }
-    // definir la funcion area y la funcion perimetro
+    
+    area(){
+        return (this.base * this.altura) / 2;
+    }
+
+    perimetro() {
+        return this.base * 3;
+    }
+
 }
 
-// crear un triangulo con base = 10 altura = 20 y nombre tri1
-export function createTriangulo() {
-    // return new Triangulo(10, 20, "tri1")
+
+export function createTriangulo(base = 10, altura = 20 , nombre = "tri1") {
+  
+    return new Triangulo(base, altura, nombre);
 }
 
-// crea una clase llamada cuadrado que tenga un atributo 
-// llamado lado. La clase extiende de Figura
 
-export class Cuadrado {
-    // poner el constructor y el atributo
-    // tiene que tener un atributo llamado lado y otro
-    // tiene que tener dos funciones area y perimetro
 
-    // añadir un getter para el atributo lado
-    // añadir un setter para el atributo lado
-    // añadir un getter para el atributo nombre
-    // añadir un setter para el atributo nombre
-    // añadir un getter para el atributo area
-    // añadir un getter para el atributo perimetro
+export class Cuadrado extends Figura {
+    
+    constructor(lado, nombre){
+        super(nombre);
+        this.lado = lado;
+    }
+
+    area(){
+        return this._lado ** 2
+    }
+
+    perimetro(){
+        return this._lado * 4;
+    }
+
+    get lado(){
+    
+       return this._lado;
+    }
+
+    set lado(value){
+        if (value <= 0) throw new Error("El lado debe ser mayor que 0");
+        return this._lado = value;
+    }
 }
-// esta funcion debe de crear un cuadrado de lado l
-// y nombre cua1
-export function createCuadrado(lado, nombre) {
-    return new Cuadrado(lado, "cua1")
+
+export function createCuadrado(lado, nombre = "cua1") {
+    return new Cuadrado(lado, nombre);
 }
 
-// crear una clase llamada Rectangulo que tenga dos atributos
-// llamados base y altura. La clase extiende de Figura
-export class Rectangulo {
-    // poner el constructor y los atributos privados
-    // tiene que tener dos funciones area y perimetro
-    // añadir un getter para el atributo base
-    // añadir un setter para el atributo base
-    // añadir un getter para el atributo altura
-    // añadir un setter para el atributo altura
-    // añadir un getter para el atributo nombre
-    // añadir un setter para el atributo nombre
-    // añadir un getter para el atributo area
-    // añadir un getter para el atributo perimetro
+export class Rectangulo extends Figura{
+   
+    constructor(base, altura, nombre){
+        super(nombre);
+        this.base = base;
+        this.altura = altura;
+    }
+    
+
+    area() {
+        return this.base * this.altura;
+    }
+
+    perimetro(){
+        return 2 * (this.base + this.altura);
+    }
+
+    get base() {
+        return this._base;
+    }
+
+    set base(value) {
+        if (value <= 0) throw new Error("La base debe ser mayor que 0");
+        this._base = value;
+    }
+
+    get altura() {
+        return this._altura;
+    }
+
+    set altura(value) {
+        if (value <= 0) throw new Error("La altura debe ser mayor que 0");
+        this._altura = value;
+    }
 
 } 
+    
 
-// hacer lo mismo para la clase Circulo
-export class Circulo {
+    export function createRectangulo(nombre, base, altura){
+        return new Rectangulo(base, altura, nombre);
 
+    }
+
+export class Circulo extends Figura {
+
+    constructor(radio, nombre){
+        super(nombre);
+        this.radio = radio;
+    }
+
+    area(){
+        return Math.PI * this.radio ** 2;
+    }
+
+    perimetro(){
+        return 2 * Math.PI * this.radio;
+    }
+
+    get radio() {
+        return this._radio;
+    }
+
+    set radio(value) {
+        if (value <= 0) throw new Error("El radio debe ser mayor que 0");
+        this._radio = value;
+    }
 }
 
 
 export function createCirculo(nombre, radio) {
+    return new Circulo(radio, nombre)
     
 }
 
 
-// module.exports = {
-//     createObject,
-//     Figura,
-//     Triangulo,
-//     Cuadrado,
-//     Rectangulo,
-//     Circulo,
-    
-//     createTriangulo,
-//     createCuadrado,
-//     createCirculo,
-//     createRectangulo
-// };
-// 
+ 
